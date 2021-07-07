@@ -1,1 +1,3 @@
-create database tutorial_blog
+create table test (
+    user_id integer
+);
