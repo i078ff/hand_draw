@@ -8,16 +8,17 @@ services:
      - 80:80
     depends_on:
      - gunicorn-server
+    restart: always
   gunicorn-server:
     build: ./app
     volumes:
-     - ./requirements.txt:/var/www/requirements.txt
      - ./app:/var/www/app/
      - ./run.py:/var/www/run.py
     expose:
      - "4000"
     depends_on:
      - postgres-server
+    restart: always
   postgres-server:
     build: ./postgres
     expose:
@@ -29,6 +30,7 @@ services:
     volumes:
       - ./postgres/initdb:/docker-entrypoint-initdb.d
       - database:/var/lib/postgresql/data
+    restart: always
 volumes:
   database:
     driver: local
