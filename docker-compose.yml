@@ -11,8 +11,7 @@ services:
   gunicorn-server:
     build: ./app
     volumes:
-     - ./Pipfile:/var/www/Pipfile
-     - ./Pipfile.lock:/var/www/Pipfile.lock
+     - ./requirements.txt:/var/www/requirements.txt
      - ./app:/var/www/app/
      - ./run.py:/var/www/run.py
     expose:
