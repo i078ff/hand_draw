@@ -1,33 +1,33 @@
 # hand_draw
 
 ## アプリ説明
-hand_draw(仮)はカメラから手を認識して絵を描くアプリです。
-特別なデバイスは不要で、パソコンやスマートフォンでアプリにアクセスするだけで体験できます。
+hand_draw（仮）はカメラから手を認識して絵を描くアプリです。
+特別なデバイスは不要で、パソコンやスマートフォンでブラウザからアクセスするだけで絵を描き始めることができます。
 
 ## 以下開発メンバー向け
 ### ディレクトリ構造
 ```
 hand_draw
 │  .gitignore
-│  docker-compose.yml: Dockerfileのまとめと各種設定
+│  docker-compose.yml:      Dockerfileのまとめと各種設定
 │  README.md
-│  run.py: アプリを実行するためだけのファイル
-├─app: アプリケーションサーバーのディレクトリ
-│  │  app.py: アプリのメインのファイル
-│  │  Dockerfile: Flask, Gunicorn用のDockerfile
-│  │  models.py: DBに関するファイル
-│  │  requirements.txt: pipでinstallするライブラリ
-│  ├─static: 静的ファイルを置くディレクトリ
-│  │  ├─script: JavaScriptを置くディレクトリ
-│  │  └─style: CSSを置くディレクトリ
-│  ├─templates: HTMLを置くディレクトリ
-├─nginx: WEBサーバーのディレクトリ
-│      Dockerfile: nginx用のDockerfile
-│      nginx.conf: nginxの設定ファイル
-└─postgres: DBサーバーのディレクトリ
-    │  Dockerfile: Postgres用のDockerfile
-    └─initdb: DB起動時に実行されるファイルを集めたディレクトリ
-            createdb.sql: データベースを作成
+│  run.py:                  アプリを実行するためだけのファイル
+├─app:                      アプリケーションサーバーのディレクトリ
+│  │  app.py:               アプリのメインのファイル
+│  │  Dockerfile:           Flask, Gunicorn用のDockerfile
+│  │  models.py:            DBに関するファイル
+│  │  requirements.txt:     pipでinstallするライブラリ
+│  ├─static:                静的ファイルを置くディレクトリ
+│  │  ├─script:             JavaScriptを置くディレクトリ
+│  │  └─style:              CSSを置くディレクトリ
+│  ├─templates:             HTMLを置くディレクトリ
+├─nginx:                    WEBサーバーのディレクトリ
+│      Dockerfile:          nginx用のDockerfile
+│      nginx.conf:          nginxの設定ファイル
+└─postgres:                 DBサーバーのディレクトリ
+    │  Dockerfile:          Postgres用のDockerfile
+    └─initdb:               DB起動時に実行されるファイルを集めたディレクトリ
+            createdb.sql:   データベースを作成
 ```
 
 ### 実行方法
