@@ -1,0 +1,36 @@
+version: "3"
+services:
+  nginx-server:
+    build: ./nginx
+    volumes:
+     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+     - 80:80
+    depends_on:
+     - gunicorn-server
+    restart: always
+  gunicorn-server:
+    build: ./app
+    volumes:
+     - ./app:/var/www/app/
+     - ./run.py:/var/www/run.py
+    expose:
+     - "4000"
+    depends_on:
+     - postgres-server
+    restart: always
+  postgres-server:
+    build: ./postgres
+    expose:
+     - "5432"
+    environment:
+     - POSTGRES_USER=user
+     - POSTGRES_PASSWORD=password
+     - POSTGRES_DB=test
+    volumes:
+      - ./postgres/initdb:/docker-entrypoint-initdb.d
+      - database:/var/lib/postgresql/data
+    restart: always
+volumes:
+  database:
+    driver: local
