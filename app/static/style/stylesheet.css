@@ -1,0 +1,50 @@
+body {
+    font-family: "Avenir Next";
+  }
+.header{
+    background-color: cornsilk;
+    height: 90px; 
+    padding-left: 50px;
+    padding-right:50px;
+}
+button{
+font-size: 20px;
+ margin:10px 30px;
+ border-radius: 50px;
+ background-color: darkgray;
+ width:70px;
+ height:70px
+
+}
+.flex-con{
+    display:flex;
+    justify-content: space-between;
+}
+.flex-3 button{
+    font-size:  40px;
+}
+.flex-4 button{
+    font-size:40px;
+}
+.flex-5 button{
+    font-size: 14px;
+}
+.flex-6 button{
+    font-size:50px;
+    padding:6px 3px; 
+}
+.main{
+    height:90vh;
+    background-color: snow;
+    display:flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+}
+.flex-7{
+    margin-left:90%;
+    margin-bottom:30px;
+}
+.flex-7 button{
+    font-size: 45px;
+    
+}
