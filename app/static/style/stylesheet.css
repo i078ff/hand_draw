@@ -35,16 +35,100 @@ font-size: 20px;
 }
 .main{
     height:90vh;
-    background-color: snow;
+    background-color: white;
     display:flex;
-    flex-direction: column-reverse;
     justify-content: space-between;
 }
+.button{
+    margin-left:50px ;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom:30%;
+    
+}
+.button_1{
+    margin-right: 40%;
+    margin-left: 8px;
+}
+
+.s{
+    margin-top: 30px;
+   
+   
+}
+.m{
+    margin-top: 30px;
+    margin-left: -3px;
+  
+}
+.l{
+    margin-top: 30px;
+    margin-left: -7px;
+   
+}
+.s button{
+    width:20px;
+    height:20px
+}
+.m button{
+    width:30px;
+    height:30px
+}
+.l button{
+    width:40px;
+    height:40px
+}
+p{
+    display: flex;
+    justify-content: center;
+}
+.draft_save{
+    margin-top: 10%;
+    margin-right: 20%;
+    margin-left:-35%;
+    background-color: cornsilk;
+    width: 300px;
+    height:150px;
+    border-radius: 10px;
+    
+   
+}
+.no_yes{
+    display: flex;
+    justify-content: space-between;
+}
+
+.no_yes button{
+    border-radius: 10px;
+    width: 80px;
+    height: 50px;
+}
+
+.button_2{
+    margin-right: 50px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .flex-7{
-    margin-left:90%;
+    margin-top:180px;
     margin-bottom:30px;
 }
 .flex-7 button{
     font-size: 45px;
     
+}
+.login button{
+ font-size: 13px;
+}
+.help button{
+    font-size: 15px;
+}
+.home button{
+    font-size: 15px;
+}
+.save button{
+    font-size: 17px;
 }
