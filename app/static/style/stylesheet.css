@@ -47,37 +47,57 @@ font-size: 20px;
     margin-bottom:30%;
     
 }
+.white button{
+    background-color: white;
+}
+.red button{
+    background-color: red;
+}
+.blue button{
+    background-color: blue;
+}
+.yellow button{
+    background-color: yellow;
+}
+.green button{
+    background-color: greenyellow;
+}
+.black button{
+    background-color: black;
+}
 .button_1{
     margin-right: 40%;
     margin-left: 8px;
 }
 
 .s{
-    margin-top: 30px;
-   
-   
+    margin-top: 30px; 
+    margin-left:41px
 }
 .m{
     margin-top: 30px;
-    margin-left: -3px;
-  
+    margin-left: 36px; 
 }
 .l{
     margin-top: 30px;
-    margin-left: -7px;
-   
+    margin-left: 31px;
 }
 .s button{
     width:20px;
-    height:20px
+    height:20px;
+    background-color: black;
 }
 .m button{
     width:30px;
-    height:30px
+    height:30px;
+    background-color: black;
+    
 }
 .l button{
     width:40px;
-    height:40px
+    height:40px;
+    background-color: black;
+    
 }
 p{
     display: flex;
