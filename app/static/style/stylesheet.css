@@ -1,22 +1,24 @@
 body {
     font-family: "Avenir Next";
-  }
+    margin: 0;
+    padding: 0;
+}
 
 .header{
     background-color: cornsilk;
     height: 90px; 
     padding-left: 50px;
     padding-right:50px;
+    margin: 0;
 }
 
 button{
-font-size: 20px;
- margin:10px 30px;
- border-radius: 50px;
- background-color: darkgray;
- width:70px;
- height:70px
-
+    font-size: 20px;
+    margin:10px 30px;
+    border-radius: 50px;
+    background-color: darkgray;
+    width:70px;
+    height:70px
 }
 
 .flex-con{
@@ -54,7 +56,6 @@ font-size: 20px;
     flex-direction: column;
     justify-content: space-between;
     margin-bottom:30%;  
-  
 }
 
 .white button{
@@ -156,7 +157,6 @@ p{
     display:flex;
     flex-direction: column;
     justify-content: space-between;
-   
 }
 
 .flex-7{
@@ -166,11 +166,10 @@ p{
 
 .flex-7 button{
     font-size: 45px;
-    
 }
 
 .login button{
- font-size: 13px;
+    font-size: 13px;
 }
 
 .help button{
