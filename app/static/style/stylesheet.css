@@ -26,19 +26,19 @@ button{
     justify-content: space-between;
 }
 
-.flex-3 button{
+.menu-back button{
     font-size:  40px;
 }
 
-.flex-4 button{
+.menu-forward button{
     font-size:40px;
 }
 
-.flex-5 button{
+.menu-clear button{
     font-size: 14px;
 }
 
-.flex-6 button{
+.menu-setting button{
     font-size:50px;
     padding:6px 3px; 
 }
