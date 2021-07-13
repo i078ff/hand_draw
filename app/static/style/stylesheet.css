@@ -50,12 +50,10 @@ button{
     justify-content:space-between;
 }
 
-.button{
-    margin-left:50px ;
+.button-color-hide{
     display:flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-bottom:30%;  
 }
 
 .white button{
