@@ -128,7 +128,7 @@ p{
     justify-content: center;
 }
 
-.draft_save{
+/* .draft_save{
     margin-top: 10%;
     margin-right: 20%;
     margin-left:-35%;
@@ -136,10 +136,9 @@ p{
     width: 300px;
     height:150px;
     border-radius: 10px;
+} */
 
-}
-
-.no_yes{
+/* .no_yes{
     display: flex;
     justify-content: space-between;
 }
@@ -148,23 +147,23 @@ p{
     border-radius: 10px;
     width: 80px;
     height: 50px;
-}
+} */
 
-.button_2{
+.button-setting-hide{
     margin-right: 50px;
     display:flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.flex-7{
+/* .flex-7{
     margin-top:180px;
     margin-bottom:30px;
 }
 
 .flex-7 button{
     font-size: 45px;
-}
+} */
 
 .login button{
     font-size: 13px;
@@ -178,6 +177,6 @@ p{
     font-size: 15px;
 }
 
-.save button{
+/* .save button{
     font-size: 17px;
-}
+} */
