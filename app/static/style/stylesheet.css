@@ -19,33 +19,49 @@ button{
     background-color: darkgray;
     width:70px;
     height:70px
+    
 }
 
 .flex-con{
     display:flex;
     justify-content: space-between;
 }
-
+.menu-color button{
+    border:none;
+    
+}
+.menu-thickness button{
+    border:none;
+    
+}
 .menu-back button{
     font-size:  40px;
+    border:none;
+    
 }
 
 .menu-forward button{
     font-size:40px;
+    border:none;
+    
 }
 
 .menu-clear button{
     font-size: 14px;
+    border:none;
+    
 }
 
 .menu-setting button{
     font-size:50px;
     padding:6px 3px; 
+    border:none;
+    
 }
 
 .main{
     height:90vh;
-    background-color: white;
+    background-color:white;
     display:flex;
     justify-content:space-between;
 }
@@ -58,26 +74,45 @@ button{
 
 .white button{
     background-color: white;
+    border:none;
+    box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);
+
 }
 
 .red button{
     background-color: red;
+    border:none;
+    box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);
+    
 }
 
 .blue button{
     background-color: blue;
+    border:none;
+    box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);
+
+    
 }
 
 .yellow button{
     background-color: yellow;
+    border:none;
+    box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);
+    
 }
 
 .green button{
     background-color: greenyellow;
+    border:none;
+    box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);
+    
 }
 
 .black button{
     background-color: black;
+    border:none;
+    box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);
+    
 }
 
 .button-thickness-hide{
@@ -107,12 +142,14 @@ button{
     width:20px;
     height:20px;
     background-color: black;
+    border:none;
 }
 
 .m button{
     width:30px;
     height:30px;
     background-color: black;
+    border:none;
     
 }
 
@@ -120,6 +157,7 @@ button{
     width:40px;
     height:40px;
     background-color: black;
+    border:none;
     
 }
 
@@ -147,6 +185,7 @@ p{
     border-radius: 10px;
     width: 80px;
     height: 50px;
+    border:none;
 } */
 
 .button-setting-hide{
@@ -167,16 +206,20 @@ p{
 
 .logout button{
     font-size: 12px;
+    border:none;
 }
 
 .help button{
     font-size: 15px;
+    border:none;
 }
 
 .home button{
     font-size: 15px;
+    border:none;
 }
 
 /* .save button{
     font-size: 17px;
+    border:none;
 } */
