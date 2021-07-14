@@ -51,9 +51,12 @@ button{
 }
 
 .button-color-hide{
-    display:flex;
+    /* display:flex; */
+    display: none;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    z-index: 1
 }
 
 .white button{
@@ -81,9 +84,12 @@ button{
 }
 
 .button-thickness-hide{
-    margin-right: 40%;
-    margin-left: 8px;
-    
+    /* display:flex; */
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1
 }
 
 .s{
@@ -150,10 +156,12 @@ p{
 } */
 
 .button-setting-hide{
-    margin-right: 50px;
-    display:flex;
+    /* display:flex; */
+    display: none;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    z-index: 1;
 }
 
 /* .flex-7{
@@ -180,3 +188,9 @@ p{
 /* .save button{
     font-size: 17px;
 } */
+
+.container {
+    position: absolute;
+    top: 90px;
+    left: 0;
+}
