@@ -51,6 +51,10 @@ button{
     border:none;
     
 }
+.menu-touka button{
+    font-size:20px;
+    border:none;
+}
 
 .menu-setting button{
     font-size:50px;
