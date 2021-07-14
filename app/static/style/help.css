@@ -1,0 +1,43 @@
+
+html{
+    background-color:beige;
+}
+body{
+    font-family: "Avenir Next";
+    background-color:white;
+    width:auto;
+    height:auto;
+    border: solid 2px black;
+    position: relative;
+}
+h1{
+    text-align: center;
+    font-size:40px;
+
+}
+h2{
+    width: 10% 80% 10%;
+    height:15% 60% 15%;
+    background-color:white;
+    border:solid 2px black;
+    margin: 5% ;
+    ;
+    
+}
+.pic_frame{
+        display:inline-block;
+        text-align:center;
+        font-size:18px;
+        margin:9.5%;
+        line-height:10px;
+        }
+
+
+input[type="submit"] {
+margin: 5px 40%;
+position: absolute;
+text-align:center;
+width:20%;
+height:40px;
+font-size:24px;
+}
