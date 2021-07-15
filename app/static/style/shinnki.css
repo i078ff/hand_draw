@@ -1,0 +1,54 @@
+html{
+    background-color:beige;
+}
+
+
+h1{
+    display:inline-block;
+    
+      
+    border-radius: 15px;
+    border:solid 2px black; 
+    background-color: white;
+          margin: 5px;
+          width:300px;
+          height:200px;
+          font-size:50px;
+            color: black;
+             
+}
+
+.flex-con{
+    display:flex;
+            justify-content: space-between;}
+
+
+.btn{
+            
+            border-radius: 15px;
+         background-color: white;
+               margin: 5px;
+               width:300px;
+               height:200px;
+               font-size:50px;
+              text-decoration: none;
+                 color: black;
+                  
+                
+        }
+        
+p{
+    text-align: center;
+    font-size:24px;
+    line-height:5px;
+
+}
+input[type="submit"] {
+    margin: 5px 40%;
+    position: absolute;
+    text-align:center;
+    width:20%;
+    height:40px;
+    font-size:24px;
+    }
+                   
