@@ -7,10 +7,11 @@ window.addEventListener(
         function onResults(results) {
             canvasCtx.save();
             canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-            canvasCtx.drawImage(
-                results.image, 0, 0, canvasElement.width, canvasElement.height);
             if (results.multiHandLandmarks) {
                 for (const landmarks of results.multiHandLandmarks) {
+                    const [x, y, w, h] = getHandRegion(landmarks)
+                    canvasCtx.drawImage(
+                        results.image, x, y, w, h, x, y, w, h);
                     drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS,
                         { color: '#00FF00', lineWidth: 5 });
                     drawLandmarks(canvasCtx, landmarks, { color: '#FF0000', lineWidth: 2 });
@@ -39,4 +40,18 @@ window.addEventListener(
             height: 720
         });
         camera.start();
+
+        function getHandRegion(landmarks) {
+            const xList = [];
+            const yList = [];
+            for (let i = 0; i < landmarks.length; i++) {
+                xList.push(landmarks[i]['x']);
+                yList.push(landmarks[i]['y']);
+            }
+            const x = Math.min(...xList) * canvasElement.width;
+            const y = Math.min(...yList) * canvasElement.height;
+            const w = Math.max(...xList) * canvasElement.width - x;
+            const h = Math.max(...yList) * canvasElement.height - y;
+            return [x, y, w, h];
+        }
     }, false);
