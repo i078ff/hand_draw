@@ -28,7 +28,7 @@ window.addEventListener(
             }
         });
         hands.setOptions({
-            maxNumHands: 1,
+            maxNumHands: 2,
             minDetectionConfidence: 0.5,
             minTrackingConfidence: 0.5
         });
@@ -50,10 +50,17 @@ window.addEventListener(
                 xList.push(landmarks[i]['x']);
                 yList.push(landmarks[i]['y']);
             }
-            const x = Math.min(...xList) * canvasElement.width;
-            const y = Math.min(...yList) * canvasElement.height;
-            const w = Math.max(...xList) * canvasElement.width - x;
-            const h = Math.max(...yList) * canvasElement.height - y;
+            let x = Math.min(...xList) * canvasElement.width;
+            let y = Math.min(...yList) * canvasElement.height;
+            let w = Math.max(...xList) * canvasElement.width - x;
+            let h = Math.max(...yList) * canvasElement.height - y;
+
+            // このままのx, y, w, hだと手が見切れるので上下左右10%ずつ領域を広げる
+            x = x - w / 100 * 10;
+            y = y - h / 100 * 10;
+            w = w / 100 * 120;
+            h = h / 100 * 120;
+
             return [x, y, w, h];
         }
     }, false);
