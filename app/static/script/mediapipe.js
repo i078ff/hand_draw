@@ -5,30 +5,45 @@ window.addEventListener(
         const operationCanvasCtx = operationCanvasElement.getContext('2d');
         const drawCanvasElement = document.getElementById('draw_canvas');
         const drawCanvasCtx = drawCanvasElement.getContext('2d');
-        operationCanvasElement.width = window.innerWidth;
-        operationCanvasElement.height = window.innerHeight;
         drawCanvasElement.width = 900;
         drawCanvasElement.height = 600;
+        init();
 
-        function onResults(results) {
-            operationCanvasCtx.save();
-            operationCanvasCtx.clearRect(0, 0, operationCanvasElement.width, operationCanvasElement.height);
+        function init() {
+            operationCanvasElement.width = window.innerWidth;
+            operationCanvasElement.height = window.innerHeight;
             operationCanvasCtx.scale(-1, 1);
             operationCanvasCtx.translate(-operationCanvasElement.width, 0);
+            drawCanvasCtx.scale(-1, 1);
+            drawCanvasCtx.translate(-drawCanvasElement.width, 0);
+        }
+
+        function onResults(results) {
+            operationCanvasCtx.clearRect(0, 0, operationCanvasElement.width, operationCanvasElement.height);
             if (results.multiHandLandmarks) {
                 for (const landmarks of results.multiHandLandmarks) {
-                    w = results.image.width;
-                    h = results.image.height;
-                    const [dx, dy, dw, dh] = getHandRegion(landmarks)
+                    const w = results.image.width;
+                    const h = results.image.height;
+                    const drawRect = drawCanvasElement.getBoundingClientRect();
+                    const indexRegion = { 'x': landmarks[8]['x'] * operationCanvasElement.width, 'y': landmarks[8]['y'] * operationCanvasElement.height };
+                    const [dx, dy, dw, dh] = getHandRegion(landmarks);
+                    drawLine(indexRegion, drawRect);
                     operationCanvasCtx.drawImage(
                         results.image, w * dx, h * dy, w * dw, h * dh,
                         operationCanvasElement.width * dx, operationCanvasElement.height * dy, operationCanvasElement.width * dw, operationCanvasElement.height * dh);
-                    drawConnectors(operationCanvasCtx, landmarks, HAND_CONNECTIONS,
-                        { color: '#00FF00', lineWidth: 5 });
-                    drawLandmarks(operationCanvasCtx, landmarks, { color: '#FF0000', lineWidth: 2 });
+                    // drawConnectors(operationCanvasCtx, landmarks, HAND_CONNECTIONS,
+                    //     { color: '#00FF00', lineWidth: 5 });
+                    // drawLandmarks(operationCanvasCtx, landmarks, { color: '#FF0000', lineWidth: 2 });
                 }
             }
-            operationCanvasCtx.restore();
+        }
+
+        function drawLine(indexRegion, drawRect) {
+            if ((drawRect.left < indexRegion.x) && (indexRegion.x < drawRect.right) && (drawRect.top < indexRegion.y) && (indexRegion.y < drawRect.bottom)) {
+                drawCanvasCtx.lineWidth = 5;
+                drawCanvasCtx.lineTo(indexRegion.x - drawRect.left, indexRegion.y - drawRect.top);
+                drawCanvasCtx.stroke();
+            }
         }
 
         function getHandRegion(landmarks) {
@@ -73,7 +88,6 @@ window.addEventListener(
         camera.start();
 
         window.addEventListener('resize', () => {
-            operationCanvasElement.width = window.innerWidth;
-            operationCanvasElement.height = window.innerHeight;
+            init();
         }, false);
     }, false);
