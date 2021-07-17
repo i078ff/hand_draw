@@ -3,6 +3,8 @@ window.addEventListener(
         const videoElement = document.getElementsByClassName('input_video')[0];
         const canvasElement = document.getElementsByClassName('output_canvas')[0];
         const canvasCtx = canvasElement.getContext('2d');
+        canvasElement.width = window.innerWidth;
+        canvasElement.height = window.innerHeight;
 
         function onResults(results) {
             canvasCtx.save();
@@ -11,15 +13,38 @@ window.addEventListener(
             canvasCtx.translate(-canvasElement.width, 0);
             if (results.multiHandLandmarks) {
                 for (const landmarks of results.multiHandLandmarks) {
-                    const [x, y, w, h] = getHandRegion(landmarks)
+                    w = results.image.width;
+                    h = results.image.height;
+                    const [dx, dy, dw, dh] = getHandRegion(landmarks)
                     canvasCtx.drawImage(
-                        results.image, x, y, w, h, x, y, w, h);
+                        results.image, w * dx, h * dy, w * dw, h * dh,
+                        canvasElement.width * dx, canvasElement.height * dy, canvasElement.width * dw, canvasElement.height * dh);
                     drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS,
                         { color: '#00FF00', lineWidth: 5 });
                     drawLandmarks(canvasCtx, landmarks, { color: '#FF0000', lineWidth: 2 });
                 }
             }
             canvasCtx.restore();
+        }
+
+        function getHandRegion(landmarks) {
+            const xList = [];
+            const yList = [];
+            for (let i = 0; i < landmarks.length; i++) {
+                xList.push(landmarks[i]['x']);
+                yList.push(landmarks[i]['y']);
+            }
+            let x = Math.min(...xList);
+            let y = Math.min(...yList);
+            let w = Math.max(...xList) - x;
+            let h = Math.max(...yList) - y;
+
+            // このままのx, y, w, hだと手が見切れるので上下左右10%ずつ領域を広げる
+            x = x - w / 10;
+            y = y - h / 10;
+            w = w * 1.2;
+            h = h * 1.2;
+            return [x, y, w, h];
         }
 
         const hands = new Hands({
@@ -34,33 +59,17 @@ window.addEventListener(
         });
         hands.onResults(onResults);
 
-        const camera = new Camera(videoElement, {
+        let camera = new Camera(videoElement, {
             onFrame: async () => {
                 await hands.send({ image: videoElement });
             },
-            width: 1280,
-            height: 720
+            width: window.innerWidth,
+            height: window.innerHeight
         });
         camera.start();
 
-        function getHandRegion(landmarks) {
-            const xList = [];
-            const yList = [];
-            for (let i = 0; i < landmarks.length; i++) {
-                xList.push(landmarks[i]['x']);
-                yList.push(landmarks[i]['y']);
-            }
-            let x = Math.min(...xList) * canvasElement.width;
-            let y = Math.min(...yList) * canvasElement.height;
-            let w = Math.max(...xList) * canvasElement.width - x;
-            let h = Math.max(...yList) * canvasElement.height - y;
-
-            // このままのx, y, w, hだと手が見切れるので上下左右10%ずつ領域を広げる
-            x = x - w / 100 * 10;
-            y = y - h / 100 * 10;
-            w = w / 100 * 120;
-            h = h / 100 * 120;
-
-            return [x, y, w, h];
-        }
+        window.addEventListener('resize', () => {
+            canvasElement.width = window.innerWidth;
+            canvasElement.height = window.innerHeight;
+        }, false);
     }, false);
