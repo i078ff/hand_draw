@@ -5,6 +5,7 @@ window.addEventListener(
         const operationCanvasCtx = operationCanvasElement.getContext('2d');
         const drawCanvasElement = document.getElementById('draw_canvas');
         const drawCanvasCtx = drawCanvasElement.getContext('2d');
+        let isInDrawCanvas = false;
         drawCanvasElement.width = 900;
         drawCanvasElement.height = 600;
         init();
@@ -40,9 +41,18 @@ window.addEventListener(
 
         function drawLine(indexRegion, drawRect) {
             if ((drawRect.left < indexRegion.x) && (indexRegion.x < drawRect.right) && (drawRect.top < indexRegion.y) && (indexRegion.y < drawRect.bottom)) {
+                if (!isInDrawCanvas) {
+                    isInDrawCanvas = true;
+                    drawCanvasCtx.beginPath();
+                }
                 drawCanvasCtx.lineWidth = 5;
                 drawCanvasCtx.lineTo(indexRegion.x - drawRect.left, indexRegion.y - drawRect.top);
                 drawCanvasCtx.stroke();
+            } else {
+                if (isInDrawCanvas) {
+                    isInDrawCanvas = false;
+                    drawCanvasCtx.closePath();
+                }
             }
         }
 
