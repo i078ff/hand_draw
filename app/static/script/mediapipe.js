@@ -3,8 +3,12 @@ window.addEventListener(
         const videoElement = document.getElementsByClassName('input_video')[0];
         const operationCanvasElement = document.getElementsByClassName('operation_canvas')[0];
         const operationCanvasCtx = operationCanvasElement.getContext('2d');
+        const drawCanvasElement = document.getElementById('draw_canvas');
+        const drawCanvasCtx = drawCanvasElement.getContext('2d');
         operationCanvasElement.width = window.innerWidth;
         operationCanvasElement.height = window.innerHeight;
+        drawCanvasElement.width = 900;
+        drawCanvasElement.height = 600;
 
         function onResults(results) {
             operationCanvasCtx.save();
