@@ -257,3 +257,14 @@ p{
     right: 0;
     margin: 0 auto;
 }
+
+#hand_canvas {
+    position: absolute;
+    display: block;
+    border: solid 2px black;
+    top: 750px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
