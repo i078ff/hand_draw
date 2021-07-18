@@ -23,15 +23,10 @@ window.addEventListener(
             operationCanvasCtx.clearRect(0, 0, operationCanvasElement.width, operationCanvasElement.height);
             if (results.multiHandLandmarks) {
                 for (const landmarks of results.multiHandLandmarks) {
-                    const w = results.image.width;
-                    const h = results.image.height;
-                    const drawRect = drawCanvasElement.getBoundingClientRect();
-                    const indexRegion = { 'x': landmarks[8]['x'] * operationCanvasElement.width, 'y': landmarks[8]['y'] * operationCanvasElement.height };
-                    const [dx, dy, dw, dh] = getHandRegion(landmarks);
-                    drawLine(indexRegion, drawRect);
-                    operationCanvasCtx.drawImage(
-                        results.image, w * dx, h * dy, w * dw, h * dh,
-                        operationCanvasElement.width * dx, operationCanvasElement.height * dy, operationCanvasElement.width * dw, operationCanvasElement.height * dh);
+                    const indexCoordinate = { 'x': landmarks[8]['x'] * operationCanvasElement.width, 'y': landmarks[8]['y'] * operationCanvasElement.height };
+                    drawLine(indexCoordinate);
+                    drawHandRegion(results.image, landmarks);
+                    // 各ランドマークを表示
                     // drawConnectors(operationCanvasCtx, landmarks, HAND_CONNECTIONS,
                     //     { color: '#00FF00', lineWidth: 5 });
                     // drawLandmarks(operationCanvasCtx, landmarks, { color: '#FF0000', lineWidth: 2 });
@@ -39,14 +34,15 @@ window.addEventListener(
             }
         }
 
-        function drawLine(indexRegion, drawRect) {
-            if ((drawRect.left < indexRegion.x) && (indexRegion.x < drawRect.right) && (drawRect.top < indexRegion.y) && (indexRegion.y < drawRect.bottom)) {
+        function drawLine(indexCoordinate) {
+            const drawRect = drawCanvasElement.getBoundingClientRect();
+            if ((drawRect.left < indexCoordinate.x) && (indexCoordinate.x < drawRect.right) && (drawRect.top < indexCoordinate.y) && (indexCoordinate.y < drawRect.bottom)) {
                 if (!isInDrawCanvas) {
                     isInDrawCanvas = true;
                     drawCanvasCtx.beginPath();
                 }
                 drawCanvasCtx.lineWidth = 5;
-                drawCanvasCtx.lineTo(indexRegion.x - drawRect.left, indexRegion.y - drawRect.top);
+                drawCanvasCtx.lineTo(indexCoordinate.x - drawRect.left, indexCoordinate.y - drawRect.top);
                 drawCanvasCtx.stroke();
             } else {
                 if (isInDrawCanvas) {
@@ -54,6 +50,13 @@ window.addEventListener(
                     drawCanvasCtx.closePath();
                 }
             }
+        }
+
+        function drawHandRegion(image, landmarks) {
+            const [dx, dy, dw, dh] = getHandRegion(landmarks);
+            operationCanvasCtx.drawImage(
+                image, image.width * dx, image.height * dy, image.width * dw, image.height * dh,
+                operationCanvasElement.width * dx, operationCanvasElement.height * dy, operationCanvasElement.width * dw, operationCanvasElement.height * dh);
         }
 
         function getHandRegion(landmarks) {
@@ -82,7 +85,7 @@ window.addEventListener(
             }
         });
         hands.setOptions({
-            maxNumHands: 2,
+            maxNumHands: 1,
             minDetectionConfidence: 0.5,
             minTrackingConfidence: 0.5
         });
