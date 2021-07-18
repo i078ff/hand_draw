@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
     <title>hand_draw</title>
     <link rel="stylesheet" href="../static/style/draw.css">
 </head>
@@ -81,7 +87,13 @@
                 <div class="yes"><button>はい</button></div>
             </div>
         </div> -->
+        <div class="container">
+            <video class="input_video" style="display: none;"></video>
+            <canvas class="operation_canvas"></canvas>
+        </div>
+        <canvas id="draw_canvas"></canvas>
     </main>
+    <script src="../static/script/mediapipe.js"></script>
 </body>
 
 </html>
