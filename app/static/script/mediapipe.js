@@ -5,9 +5,13 @@ window.addEventListener(
         const operationCanvasCtx = operationCanvasElement.getContext('2d');
         const drawCanvasElement = document.getElementById('draw_canvas');
         const drawCanvasCtx = drawCanvasElement.getContext('2d');
-        let isInDrawCanvas = false;
+        const handCanvasElement = document.getElementById('hand_canvas');
+        const handCanvasCtx = handCanvasElement.getContext('2d');
         drawCanvasElement.width = 900;
         drawCanvasElement.height = 600;
+        handCanvasElement.width = 112;
+        handCanvasElement.height = 112;
+        let isInDrawCanvas = false;
         init();
 
         function init() {
@@ -17,10 +21,13 @@ window.addEventListener(
             operationCanvasCtx.translate(-operationCanvasElement.width, 0);
             drawCanvasCtx.scale(-1, 1);
             drawCanvasCtx.translate(-drawCanvasElement.width, 0);
+            handCanvasCtx.scale(-1, 1);
+            handCanvasCtx.translate(-handCanvasElement.width, 0);
         }
 
         function onResults(results) {
             operationCanvasCtx.clearRect(0, 0, operationCanvasElement.width, operationCanvasElement.height);
+            handCanvasCtx.clearRect(0, 0, handCanvasElement.width, handCanvasElement.height);
             if (results.multiHandLandmarks) {
                 for (const landmarks of results.multiHandLandmarks) {
                     const indexCoordinate = { 'x': landmarks[8]['x'] * operationCanvasElement.width, 'y': landmarks[8]['y'] * operationCanvasElement.height };
@@ -57,6 +64,9 @@ window.addEventListener(
             operationCanvasCtx.drawImage(
                 image, image.width * dx, image.height * dy, image.width * dw, image.height * dh,
                 operationCanvasElement.width * dx, operationCanvasElement.height * dy, operationCanvasElement.width * dw, operationCanvasElement.height * dh);
+            handCanvasCtx.drawImage(
+                image, image.width * dx, image.height * dy, image.width * dw, image.height * dh,
+                0, 0, handCanvasElement.width, handCanvasElement.height);
         }
 
         function getHandRegion(landmarks) {

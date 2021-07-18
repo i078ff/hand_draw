@@ -262,6 +262,7 @@ p{
     position: absolute;
     display: block;
     border: solid 2px black;
+    background-color: black;
     top: 750px;
     bottom: 0;
     left: 0;
