@@ -77,9 +77,12 @@ button{
 
 
 .button-color-hide{
-    display:flex;
+    /* display:flex; */
+    display: none;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    z-index: 1
 }
 
 .white button{
@@ -126,9 +129,12 @@ button{
 }
 
 .button-thickness-hide{
-    margin-right: 40%;
-    margin-left: 8px;
-    
+    /* display:flex; */
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1
 }
 
 .s{
@@ -199,10 +205,12 @@ p{
 } */
 
 .button-setting-hide{
-    margin-right: 50px;
-    display:flex;
+    /* display:flex; */
+    display: none;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    z-index: 1;
 }
 
 /* .flex-7{
@@ -241,8 +249,8 @@ p{
     
     .header{
         background-color: cornsilk;
-        height: 700px; 
-        width: 30px;
+        height: 600px; 
+        width: 60px;
         padding-left: 10px;
         padding-right:50px;
         margin: 0;
@@ -250,15 +258,13 @@ p{
     }
     
     button{
-        font-size: 12px;
-        margin:10px 10px;
-        border-radius: 50%;
+        font-size: 15px;
+        margin:10px 30px;
+        border-radius: 50px;
         background-color: darkgray;
-        width:55px;
-        height: 55px;
+        width:50px;
+        height:50px;
     }
-
-    
     
     .flex-con{
         display:flex;
@@ -266,47 +272,29 @@ p{
         justify-content: space-between;
     }
     
-    .menu-color button{
-        border:none;
-    
-        
-    }
-
-    .menu-thickness button{
-        
-        border:none;
-        
-    }
     .menu-back button{
-        font-size:  20px;
-        padding-top: 6px;
+        font-size:  30px;
         
     }
     
     .menu-forward button{
-        font-size:40px;
-        border:none;
-        padding-top: 6px;
-        
+        font-size:30px;
     }
     
     .menu-clear button{
-        font-size: 12px;
-        border:none;
-        
+        font-size: 8px;
     }
+
     .menu-touka button{
-        font-size:15px;
-        border:none;
+        font-size:8px;
     }
     
     .menu-setting button{
         font-size:30px;
-        padding: 1px 1px ; 
-        border:none;
-    
-        
+        padding:1px 1px; 
+       
     }
+
     
     .main{
         height:90vh;
@@ -315,7 +303,12 @@ p{
         justify-content:space-between;
     }
 
-    
+    .menu-color{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+        
+    }
     
     
     .button-color-hide{
@@ -326,7 +319,11 @@ p{
     
     
 
-   
+    .menu-thickness{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
     
     .button-thickness-hide{
         margin-right: 40%;
@@ -354,7 +351,26 @@ p{
         margin-left: 1px;
     }
     
-   
+    .s button{
+        width:20px;
+        height:20px;
+        background-color: black;
+    }
+    
+    .m button{
+        width:30px;
+        height:30px;
+        background-color: black;
+        
+    }
+    
+    .l button{
+        width:40px;
+        height:40px;
+        background-color: black;
+        
+    }
+    
     p{
         display: flex;
         justify-content: center;
@@ -405,15 +421,15 @@ p{
     } */
     
     .logout button{
-        font-size: 0.1px;
+        font-size: 1px;
     }
     
     .help button{
-        font-size: 15px;
+        font-size: 8px;
     }
     
     .home button{
-        font-size: 15px;
+        font-size: 8px;
     }
     
     /* .save button{
