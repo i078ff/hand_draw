@@ -29,8 +29,8 @@ window.addEventListener('DOMContentLoaded', () => {
         ],
     };
     // The start method will wait until the DOM is loaded.
-    // if (location.pathname === '/login') {
-    const ui = new firebaseui.auth.AuthUI(firebase.auth());
-    ui.start('#firebaseui-auth-container', uiConfig);
-    // }
+    if (location.pathname === '/login') {
+        const ui = new firebaseui.auth.AuthUI(firebase.auth());
+        ui.start('#firebaseui-auth-container', uiConfig);
+    }
 }, false);
