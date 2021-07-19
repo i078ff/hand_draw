@@ -33,4 +33,10 @@ window.addEventListener('DOMContentLoaded', () => {
         const ui = new firebaseui.auth.AuthUI(firebase.auth());
         ui.start('#firebaseui-auth-container', uiConfig);
     }
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if (!user && location.pathname !== '/login') {
+            window.location.href = '/login';
+        }
+    });
 }, false);
