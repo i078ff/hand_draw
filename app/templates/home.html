@@ -1,37 +1,44 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>hand_draw</title>
-        <link rel="stylesheet" href="../static/style/home.css">
-        
-    </head>
-    
-    <body>
-        <table style="width:100%;
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <link rel="stylesheet" href="../static/style/home.css">
+    <title>HandDraw | home</title>
+</head>
+
+<body>
+    <table style="width:100%;
         word-break:break-all;">
-        
-            <div class="flex-con">
-                <div class="flex-1">
-                    <button class="btn">
-                        ＋
-                    </button>
-                    <p>新規作成</p>
-                </div>
 
-                <div class="flex-2">
-                        <h1></h1>
-                        <p>保存している画像</p>
-                </div> 
-
-                <div class="flex-3">
-                        <h1><span></span></h1>
-                        
-                </div>
-                
+        <div class="flex-con">
+            <div class="flex-1">
+                <button class="btn">
+                    ＋
+                </button>
+                <p>新規作成</p>
             </div>
 
-             <input type="submit" value="戻る" />
-                </body> 
-                
-                </html>
+            <div class="flex-2">
+                <h1></h1>
+                <p>保存している画像</p>
+            </div>
+
+            <div class="flex-3">
+                <h1><span></span></h1>
+
+            </div>
+
+        </div>
+
+        <input type="submit" value="戻る" />
+        <script src="../static/script/script.js" type="module"></script>
+</body>
+
+</html>
