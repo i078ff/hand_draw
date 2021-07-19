@@ -248,7 +248,7 @@ p{
     
     .header{
         background-color: cornsilk;
-        height: 600px; 
+        height: 700px; 
         width: 60px;
         padding-left: 10px;
         padding-right:50px;
@@ -261,8 +261,8 @@ p{
         margin:10px 30px;
         border-radius: 50px;
         background-color: darkgray;
-        width:50px;
-        height:50px;
+        width:55px;
+        height:55px;
     }
     
     .flex-con{
@@ -278,6 +278,7 @@ p{
     
     .menu-forward button{
         font-size:30px;
+        padding-top: 6px;
     }
     
     .menu-clear button{
@@ -302,12 +303,6 @@ p{
         justify-content:space-between;
     }
 
-    .menu-color{
-        display:flex;
-        flex-direction: row;
-        justify-content: space-between;
-        
-    }
     
     
     .button-color-hide{
@@ -318,11 +313,7 @@ p{
     
     
 
-    .menu-thickness{
-        display:flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
+    
     
     .button-thickness-hide{
         margin-right: 40%;
