@@ -10,7 +10,7 @@ db.session.commit()
 
 @app.route("/login")
 def login():
-    return render_template("login_from.html")
+    return render_template("login_form.html")
 
 
 @app.route("/home")
