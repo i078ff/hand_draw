@@ -56,6 +56,7 @@ window.addEventListener(
                     isInDrawCanvas = false;
                     drawCanvasCtx.closePath();
                 }
+                console.log(results.multiHandLandmarks)
             }
         }
 
