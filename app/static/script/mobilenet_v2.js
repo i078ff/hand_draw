@@ -1,4 +1,4 @@
-async function initModel(modelFile) {
+export async function initModel(modelFile) {
     // 推論に用いるセッションの初期化
     // Backendには cpu や webgl, wasm を利用することができます
     const session = new InferenceSession({ backendHint: 'webgl' });

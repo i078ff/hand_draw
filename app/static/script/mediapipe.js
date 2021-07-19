@@ -1,3 +1,5 @@
+import { initModel, runModel } from './mobilenet_v2.js';
+
 window.addEventListener(
     'DOMContentLoaded', () => {
         const videoElement = document.getElementsByClassName('input_video')[0];
@@ -12,7 +14,11 @@ window.addEventListener(
         handCanvasElement.width = 112;
         handCanvasElement.height = 112;
         let isInDrawCanvas = false;
+        const modelFile = './static/.onnx';
         init();
+        initModel(modelFile).then(session => {
+            console.log(session)
+        })
 
         function init() {
             operationCanvasElement.width = window.innerWidth;
