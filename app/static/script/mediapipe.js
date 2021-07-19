@@ -1,4 +1,4 @@
-import { initModel, runModel } from './mobilenet_v2.js';
+import { initModel, runModel } from './onnx.js';
 
 window.addEventListener(
     'DOMContentLoaded', () => {
