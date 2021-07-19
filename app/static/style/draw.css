@@ -74,8 +74,6 @@ button{
     justify-content:space-between;
 }
 
-
-
 .button-color-hide{
     /* display:flex; */
     display: none;
@@ -239,6 +237,7 @@ p{
 
 /* .save button{
     font-size: 17px;
+    border:none;
 } */
 
 
