@@ -3,6 +3,8 @@ import { initModel, runModel } from './onnx.js';
 window.addEventListener(
     'DOMContentLoaded', () => {
         const menuColor = document.getElementsByClassName('menu-color')[0]
+        const menuThickness = document.getElementsByClassName('menu-thickness')[0]
+        const menuSetting = document.getElementsByClassName('menu-setting')[0]
         const videoElement = document.getElementsByClassName('input_video')[0];
         const operationCanvasElement = document.getElementsByClassName('operation_canvas')[0];
         const operationCanvasCtx = operationCanvasElement.getContext('2d');
@@ -14,7 +16,9 @@ window.addEventListener(
         drawCanvasElement.height = 600;
         handCanvasElement.width = 224;
         handCanvasElement.height = 224;
-        let onMenuFlag = false;
+        let colorFlag = false;
+        let thicknessFlag = false;
+        let settingFlag = false;
         let lineFlag = false;
         const modelFile = './static/squeezenet1_1_224_886.onnx';
         const labels = ['all', 'index', 'index_middle', 'index_thumb', 'other'];
@@ -56,7 +60,9 @@ window.addEventListener(
             console.log(labelQueue);
             await Promise.all([
                 drawPointer(indexCoordinate),
-                chooseColor(indexCoordinate, labelQueue)
+                chooseColor(indexCoordinate),
+                chooseThickness(indexCoordinate),
+                chooseSetting(indexCoordinate)
             ]);
             await drawLine(indexCoordinate)
         }
@@ -106,22 +112,61 @@ window.addEventListener(
                 (operationCanvasElement.width - indexCoordinate.x < menuColorRect.right) &&
                 (menuColorRect.top < indexCoordinate.y) &&
                 (indexCoordinate.y < menuColorRect.bottom)) {
-                if (!onMenuFlag) {
-                    onMenuFlag = true;
+                if (!colorFlag) {
+                    colorFlag = true;
                     document.getElementsByClassName('button-color-hide')[0].style.display = 'flex';
                 }
             } else {
-                if (onMenuFlag) {
-                    onMenuFlag = false;
+                if (colorFlag) {
+                    colorFlag = false;
                     document.getElementsByClassName('button-color-hide')[0].style.display = 'none';
+                }
+            }
+        }
+
+        function chooseThickness(indexCoordinate) {
+            const menuThicknessRect = menuThickness.getBoundingClientRect();
+            if ((menuThicknessRect.left < operationCanvasElement.width - indexCoordinate.x) &&
+                (operationCanvasElement.width - indexCoordinate.x < menuThicknessRect.right) &&
+                (menuThicknessRect.top < indexCoordinate.y) &&
+                (indexCoordinate.y < menuThicknessRect.bottom)) {
+                if (!thicknessFlag) {
+                    thicknessFlag = true;
+                    document.getElementsByClassName('button-thickness-hide')[0].style.display = 'flex';
+                }
+            } else {
+                if (thicknessFlag) {
+                    thicknessFlag = false;
+                    document.getElementsByClassName('button-thickness-hide')[0].style.display = 'none';
+                }
+            }
+        }
+
+        function chooseSetting(indexCoordinate) {
+            const menuSettingRect = menuSetting.getBoundingClientRect();
+            if ((menuSettingRect.left < operationCanvasElement.width - indexCoordinate.x) &&
+                (operationCanvasElement.width - indexCoordinate.x < menuSettingRect.right) &&
+                (menuSettingRect.top < indexCoordinate.y) &&
+                (indexCoordinate.y < menuSettingRect.bottom)) {
+                if (!settingFlag) {
+                    settingFlag = true;
+                    document.getElementsByClassName('button-setting-hide')[0].style.display = 'flex';
+                }
+            } else {
+                if (settingFlag) {
+                    settingFlag = false;
+                    document.getElementsByClassName('button-setting-hide')[0].style.display = 'none';
                 }
             }
         }
 
         function drawLine(indexCoordinate) {
             const drawRect = drawCanvasElement.getBoundingClientRect();
-            // 5回(labelQueue.length)連続indexかつindexの座標がdrawCanvas内の場合実行
+            // 5連続index判定かつ隠しメニュー非表示かつindexの座標がdrawCanvas内の場合実行
             if ((labelQueue.length === labelQueue.filter(label => label === 'index').length) &&
+                (!colorFlag) &&
+                (!thicknessFlag) &&
+                (!settingFlag) &&
                 (drawRect.left < indexCoordinate.x) &&
                 (indexCoordinate.x < drawRect.right) &&
                 (drawRect.top < indexCoordinate.y) &&
