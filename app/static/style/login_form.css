@@ -1,0 +1,21 @@
+body {
+    background-color: cornsilk;
+}
+
+main {
+    width: 300px;
+    margin: auto;
+    background-color: white;
+    margin-top: 100px;
+    padding: 20px;
+}
+
+main h1 {
+    text-align: center;
+}
+
+@media (max-width:900px) {
+    main {
+        margin-top: 50px;
+    }
+}
