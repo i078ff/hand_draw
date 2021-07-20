@@ -34,9 +34,39 @@ window.addEventListener('DOMContentLoaded', () => {
         ui.start('#firebaseui-auth-container', uiConfig);
     }
 
+    // 非ログイン時、強制的にログインページへ
     firebase.auth().onAuthStateChanged((user) => {
         if (!user && location.pathname !== '/login') {
             window.location.href = '/login';
         }
     });
+
+    // drawページの保存処理
+    // 10秒ごとにcanvasをサーバーに送信
+    // 画面を離れるときはめんどそうなのでしない
+    // そのうちcanvasに変化があるごとに自動保存に変更する。
+    if (location.pathname === '/draw') {
+        setInterval(saveCanvas, 10000);
+    }
+
+    function saveCanvas() {
+        const handCanvasElement = document.getElementById('draw_canvas');
+        const postData = JSON.stringify({
+            'picture_id': pictureID,
+            'user_id': firebase.auth().currentUser.uid,
+            'base64_picture': handCanvasElement.toDataURL()
+        })
+        $.ajax({
+            type: 'POST',
+            url: '/save/picture',
+            data: postData,
+            contentType: 'application/json'
+        }).done(function (data) {
+            // 成功時の処理
+            console.log(data);
+        }).fail(function (data) {
+            // 失敗時の処理
+            console.log(data);
+        });
+    }
 }, false);
