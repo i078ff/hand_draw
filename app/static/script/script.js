@@ -56,5 +56,17 @@ window.addEventListener('DOMContentLoaded', () => {
             'user_id': firebase.auth().currentUser.uid,
             'base64_picture': handCanvasElement.toDataURL()
         })
+        $.ajax({
+            type: 'POST',
+            url: '/save/picture',
+            data: postData,
+            contentType: 'application/json'
+        }).done(function (data) {
+            // 成功時の処理
+            console.log(data);
+        }).fail(function (data) {
+            // 失敗時の処理
+            console.log(data);
+        });
     }
 }, false);
