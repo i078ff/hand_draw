@@ -2,6 +2,7 @@ import { initModel, runModel } from './onnx.js';
 
 window.addEventListener(
     'DOMContentLoaded', () => {
+        const menuColor = document.getElementsByClassName('menu-color')[0]
         const videoElement = document.getElementsByClassName('input_video')[0];
         const operationCanvasElement = document.getElementsByClassName('operation_canvas')[0];
         const operationCanvasCtx = operationCanvasElement.getContext('2d');
@@ -13,6 +14,7 @@ window.addEventListener(
         drawCanvasElement.height = 600;
         handCanvasElement.width = 224;
         handCanvasElement.height = 224;
+        let onMenuFlag = false;
         let lineFlag = false;
         const modelFile = './static/squeezenet1_1_224_886.onnx';
         const labels = ['all', 'index', 'index_middle', 'index_thumb', 'other'];
@@ -53,9 +55,10 @@ window.addEventListener(
             labelQueue.push(label);
             console.log(labelQueue);
             await Promise.all([
-                drawPointer(indexCoordinate, labelQueue),
-                drawLine(indexCoordinate, labelQueue),
+                drawPointer(indexCoordinate),
+                chooseColor(indexCoordinate, labelQueue)
             ]);
+            await drawLine(indexCoordinate)
         }
 
         function drawHandRegion(image, landmarks) {
@@ -85,7 +88,7 @@ window.addEventListener(
             return [x, y, w, h];
         }
 
-        function drawPointer(indexCoordinate, labelQueue) {
+        function drawPointer(indexCoordinate) {
             operationCanvasCtx.beginPath();
             operationCanvasCtx.arc(indexCoordinate.x, indexCoordinate.y, 10, 0, 2 * Math.PI, false);
             if (labelQueue.length === labelQueue.filter(label => label === 'index').length) {
@@ -97,7 +100,25 @@ window.addEventListener(
             operationCanvasCtx.stroke();
         }
 
-        function drawLine(indexCoordinate, labelQueue) {
+        function chooseColor(indexCoordinate) {
+            const menuColorRect = menuColor.getBoundingClientRect();
+            if ((menuColorRect.left < operationCanvasElement.width - indexCoordinate.x) &&
+                (operationCanvasElement.width - indexCoordinate.x < menuColorRect.right) &&
+                (menuColorRect.top < indexCoordinate.y) &&
+                (indexCoordinate.y < menuColorRect.bottom)) {
+                if (!onMenuFlag) {
+                    onMenuFlag = true;
+                    document.getElementsByClassName('button-color-hide')[0].style.display = 'flex';
+                }
+            } else {
+                if (onMenuFlag) {
+                    onMenuFlag = false;
+                    document.getElementsByClassName('button-color-hide')[0].style.display = 'none';
+                }
+            }
+        }
+
+        function drawLine(indexCoordinate) {
             const drawRect = drawCanvasElement.getBoundingClientRect();
             // 5回(labelQueue.length)連続indexかつindexの座標がdrawCanvas内の場合実行
             if ((labelQueue.length === labelQueue.filter(label => label === 'index').length) &&
