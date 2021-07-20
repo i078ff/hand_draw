@@ -13,9 +13,10 @@ window.addEventListener(
         drawCanvasElement.height = 600;
         handCanvasElement.width = 224;
         handCanvasElement.height = 224;
-        let isInDrawCanvas = false;
+        let lineFlag = false;
         const modelFile = './static/squeezenet1_1_224_886.onnx';
         const labels = ['all', 'index', 'index_middle', 'index_thumb', 'other'];
+        const labelQueue = ['other', 'other', 'other', 'other', 'other'];
         let session;
         init();
         initModel(modelFile).then(output => {  // モデルの初期化
@@ -48,10 +49,12 @@ window.addEventListener(
             await drawHandRegion(results.image, landmarks);
             const output = await runModel(session, handCanvasCtx)
             const label = labels[output.data.indexOf(Math.max(...output.data))];
-            console.log(label);
+            labelQueue.shift();
+            labelQueue.push(label);
+            console.log(labelQueue);
             await Promise.all([
                 drawPointer(indexCoordinate),
-                drawLine(indexCoordinate)
+                drawLine(indexCoordinate, labelQueue),
             ]);
         }
 
@@ -90,19 +93,24 @@ window.addEventListener(
             operationCanvasCtx.stroke();
         }
 
-        function drawLine(indexCoordinate) {
+        function drawLine(indexCoordinate, labelQueue) {
             const drawRect = drawCanvasElement.getBoundingClientRect();
-            if ((drawRect.left < indexCoordinate.x) && (indexCoordinate.x < drawRect.right) && (drawRect.top < indexCoordinate.y) && (indexCoordinate.y < drawRect.bottom)) {
-                if (!isInDrawCanvas) {
-                    isInDrawCanvas = true;
+            // 5回(labelQueue.length)連続indexかつindexの座標がdrawCanvas内の場合実行
+            if ((labelQueue.length === labelQueue.filter(label => label === 'index').length) &&
+                (drawRect.left < indexCoordinate.x) &&
+                (indexCoordinate.x < drawRect.right) &&
+                (drawRect.top < indexCoordinate.y) &&
+                (indexCoordinate.y < drawRect.bottom)) {
+                if (!lineFlag) {
+                    lineFlag = true;
                     drawCanvasCtx.beginPath();
                 }
                 drawCanvasCtx.lineWidth = 5;
-                drawCanvasCtx.lineTo(indexCoordinate.x - drawRect.left - 15, indexCoordinate.y - drawRect.top);
+                drawCanvasCtx.lineTo(indexCoordinate.x - drawRect.left - 12, indexCoordinate.y - drawRect.top);
                 drawCanvasCtx.stroke();
             } else {
-                if (isInDrawCanvas) {
-                    isInDrawCanvas = false;
+                if (lineFlag) {
+                    lineFlag = false;
                     drawCanvasCtx.closePath();
                 }
             }
