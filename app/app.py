@@ -14,6 +14,11 @@ def login():
     return render_template("login_form.html")
 
 
+@app.route("/temp")
+def temp():
+    return render_template("temp.html")
+
+
 @app.route("/home", methods=["GET"])
 def home():
     user = "def"  # session.get("user")
