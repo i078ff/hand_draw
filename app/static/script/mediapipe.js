@@ -44,7 +44,7 @@ window.addEventListener(
                     drawLine(indexCoordinate);
                     drawHandRegion(results.image, landmarks);
                     runModel(session, handCanvasCtx).then(output => {
-                        console.log(labels[output.data.indexOf(Math.max(...output.data))]);
+                        // console.log(labels[output.data.indexOf(Math.max(...output.data))]);
                     });
                     // 各ランドマークを表示
                     // drawConnectors(operationCanvasCtx, landmarks, HAND_CONNECTIONS,
