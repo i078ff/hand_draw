@@ -53,7 +53,7 @@ window.addEventListener(
             labelQueue.push(label);
             console.log(labelQueue);
             await Promise.all([
-                drawPointer(indexCoordinate),
+                drawPointer(indexCoordinate, labelQueue),
                 drawLine(indexCoordinate, labelQueue),
             ]);
         }
@@ -85,10 +85,14 @@ window.addEventListener(
             return [x, y, w, h];
         }
 
-        function drawPointer(indexCoordinate) {
+        function drawPointer(indexCoordinate, labelQueue) {
             operationCanvasCtx.beginPath();
             operationCanvasCtx.arc(indexCoordinate.x, indexCoordinate.y, 10, 0, 2 * Math.PI, false);
-            operationCanvasCtx.fillStyle = 'rgba(50, 50, 50, 127)';
+            if (labelQueue.length === labelQueue.filter(label => label === 'index').length) {
+                operationCanvasCtx.fillStyle = 'rgba(50, 50, 50, 127)';
+            } else {
+                operationCanvasCtx.fillStyle = 'rgba(127, 127, 127, 127)';
+            }
             operationCanvasCtx.fill();
             operationCanvasCtx.stroke();
         }
