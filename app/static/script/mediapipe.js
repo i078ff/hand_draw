@@ -38,14 +38,21 @@ window.addEventListener(
             handCanvasCtx.clearRect(0, 0, handCanvasElement.width, handCanvasElement.height);
             if (results.multiHandLandmarks) {
                 for (const landmarks of results.multiHandLandmarks) {
-                    const indexCoordinate = { 'x': landmarks[8]['x'] * operationCanvasElement.width, 'y': landmarks[8]['y'] * operationCanvasElement.height };
-                    drawHandRegion(results.image, landmarks);
-                    runModel(session, handCanvasCtx).then(output => {
-                        console.log(labels[output.data.indexOf(Math.max(...output.data))]);
-                    });
-                    drawLine(indexCoordinate);
+                    operateDOM(results, landmarks);
                 }
             }
+        }
+
+        async function operateDOM(results, landmarks) {
+            const indexCoordinate = { 'x': landmarks[8]['x'] * operationCanvasElement.width, 'y': landmarks[8]['y'] * operationCanvasElement.height };
+            await drawHandRegion(results.image, landmarks);
+            const output = await runModel(session, handCanvasCtx)
+            const label = labels[output.data.indexOf(Math.max(...output.data))];
+            console.log(label);
+            await Promise.all([
+                drawPointer(indexCoordinate),
+                drawLine(indexCoordinate)
+            ]);
         }
 
         function drawHandRegion(image, landmarks) {
@@ -75,6 +82,14 @@ window.addEventListener(
             return [x, y, w, h];
         }
 
+        function drawPointer(indexCoordinate) {
+            operationCanvasCtx.beginPath();
+            operationCanvasCtx.arc(indexCoordinate.x, indexCoordinate.y, 10, 0, 2 * Math.PI, false);
+            operationCanvasCtx.fillStyle = 'rgba(50, 50, 50, 127)';
+            operationCanvasCtx.fill();
+            operationCanvasCtx.stroke();
+        }
+
         function drawLine(indexCoordinate) {
             const drawRect = drawCanvasElement.getBoundingClientRect();
             if ((drawRect.left < indexCoordinate.x) && (indexCoordinate.x < drawRect.right) && (drawRect.top < indexCoordinate.y) && (indexCoordinate.y < drawRect.bottom)) {
@@ -83,7 +98,7 @@ window.addEventListener(
                     drawCanvasCtx.beginPath();
                 }
                 drawCanvasCtx.lineWidth = 5;
-                drawCanvasCtx.lineTo(indexCoordinate.x - drawRect.left, indexCoordinate.y - drawRect.top);
+                drawCanvasCtx.lineTo(indexCoordinate.x - drawRect.left - 15, indexCoordinate.y - drawRect.top);
                 drawCanvasCtx.stroke();
             } else {
                 if (isInDrawCanvas) {
