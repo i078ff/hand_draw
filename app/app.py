@@ -20,7 +20,7 @@ def home():
 
 @app.route("/draw")
 def draw():
-    return render_template("draw.html")
+    return render_template("draw.html", picture_id=111)  # 仮の数字を入れてるので消してOKです
 
 
 @app.route("/help")
