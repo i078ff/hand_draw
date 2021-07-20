@@ -34,6 +34,7 @@ window.addEventListener('DOMContentLoaded', () => {
         ui.start('#firebaseui-auth-container', uiConfig);
     }
 
+    // 非ログイン時、強制的にログインページへ
     firebase.auth().onAuthStateChanged((user) => {
         if (!user && location.pathname !== '/login') {
             window.location.href = '/login';
@@ -48,11 +49,12 @@ window.addEventListener('DOMContentLoaded', () => {
         setInterval(saveCanvas, 10000);
     }
 
-
     function saveCanvas() {
-        const handCanvasElement = document.getElementById('hand_canvas');
-        const handCanvasCtx = handCanvasElement.getContext('2d');
-        const data = handCanvasElement.toDataURL();
-        console.log(data);
+        const handCanvasElement = document.getElementById('draw_canvas');
+        const postData = JSON.stringify({
+            'picture_id': pictureID,
+            'user_id': firebase.auth().currentUser.uid,
+            'base64_picture': handCanvasElement.toDataURL()
+        })
     }
 }, false);
