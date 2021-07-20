@@ -132,3 +132,4 @@ dmypy.json
 
 *.ipynb
 /app/static/script/firebaseConfig.json
+/app/test.db
