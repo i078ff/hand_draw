@@ -39,4 +39,18 @@ window.addEventListener('DOMContentLoaded', () => {
             window.location.href = '/login';
         }
     });
+
+    // drawページの保存処理
+    // 10秒ごとにcanvasをサーバーに送信
+    // 画面を離れるときはめんどそうなのでしない
+    // そのうちcanvasに変化があるごとに自動保存に変更する。
+    if (location.pathname === '/draw') {
+        setInterval(saveCanvas, 10000);
+    }
+
+
+    function saveCanvas() {
+        const handCanvasElement = document.getElementById('hand_canvas');
+        const handCanvasCtx = handCanvasElement.getContext('2d');
+    }
 }, false);
