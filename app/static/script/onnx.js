@@ -7,37 +7,35 @@ export async function initModel(modelFile) {
     return session;
 }
 
-export async function runModel() {
-    // Inputデータの準備（必要であれば事前に前処理をしておく必要があります）
-    // とりあえず、すべて0とするダミーデータを用意します
-    const input = getImageTensor();
-    const inputTensor = new Tensor(dummy_input, 'float32', [1, 3, 112, 112]);
-
+export async function runModel(session, ctx) {
+    const input = preProcess(ctx);
+    const inputTensor = new Tensor(input, 'float32', [1, 3, 224, 224]);
+    // const start = new Date();
     // 推論の実行
     const outputData = await session.run([inputTensor]);
+    // const end = new Date();
+    // const inferenceTime = (end.getTime() - start.getTime());
+    const output = outputData.values().next().value;
+    // console.log("推論時間：" + inferenceTime);
+    return output;
 }
 
-function getImageTensor() {
-    // input-canvasのcontextを取得
-    const ctx = document.getElementById('input-canvas').getContext('2d');
+function preProcess(ctx) {
+    const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+    const { data, width, height } = imageData;
+    const dataTensor = ndarray(new Float32Array(data), [width, height, 4]);
+    const dataProcessedTensor = ndarray(new Float32Array(width * height * 3), [1, 3, width, height]);
 
-    // input-canvasのデータをに変換して、input-canvas-scaledに書き込む
-    const ctxScaled = document.getElementById('input-canvas-scaled').getContext('2d');
-    ctxScaled.save();
-    ctxScaled.scale(28 / ctx.canvas.width, 28 / ctx.canvas.height);
-    ctxScaled.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctxScaled.drawImage(document.getElementById('input-canvas'), 0, 0);
-    ctxScaled.restore()
+    ndarray.ops.assign(dataProcessedTensor.pick(0, 0, null, null), dataTensor.pick(null, null, 2));
+    ndarray.ops.assign(dataProcessedTensor.pick(0, 1, null, null), dataTensor.pick(null, null, 1));
+    ndarray.ops.assign(dataProcessedTensor.pick(0, 2, null, null), dataTensor.pick(null, null, 0));
+    ndarray.ops.divseq(dataProcessedTensor, 255);
+    ndarray.ops.subseq(dataProcessedTensor.pick(0, 0, null, null), 0.485);
+    ndarray.ops.subseq(dataProcessedTensor.pick(0, 1, null, null), 0.456);
+    ndarray.ops.subseq(dataProcessedTensor.pick(0, 2, null, null), 0.406);
+    ndarray.ops.divseq(dataProcessedTensor.pick(0, 0, null, null), 0.229);
+    ndarray.ops.divseq(dataProcessedTensor.pick(0, 1, null, null), 0.224);
+    ndarray.ops.divseq(dataProcessedTensor.pick(0, 2, null, null), 0.225);
 
-    // input-canvas-scaledのデータをTensorに変換
-    const imageDataScaled = ctxScaled.getImageData(0, 0, 28, 28);
-    // console.log('imageDataScaled', imageDataScaled)
-
-    const input = new Float32Array(784);
-    for (let i = 0, len = imageDataScaled.data.length; i < len; i += 4) {
-        input[i / 4] = imageDataScaled.data[i + 3] / 255;
-    }
-    const tensor = new Tensor(input, 'float32', [1, 1, 28, 28]);
-
-    return tensor
+    return dataProcessedTensor.data;
 }

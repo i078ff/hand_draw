@@ -11,13 +11,17 @@ window.addEventListener(
         const handCanvasCtx = handCanvasElement.getContext('2d');
         drawCanvasElement.width = 900;
         drawCanvasElement.height = 600;
-        handCanvasElement.width = 112;
-        handCanvasElement.height = 112;
+        handCanvasElement.width = 224;
+        handCanvasElement.height = 224;
         let isInDrawCanvas = false;
-        const modelFile = './static/.onnx';
+        const modelFile = './static/squeezenet1_1_224_886.onnx';
+        const labels = ['all', 'index', 'index_middle', 'index_thumb', 'other'];
+        let session;
         init();
-        initModel(modelFile).then(session => {
-            console.log(session)
+
+        // モデルの初期化
+        initModel(modelFile).then(output => {
+            session = output;
         })
 
         function init() {
@@ -39,6 +43,9 @@ window.addEventListener(
                     const indexCoordinate = { 'x': landmarks[8]['x'] * operationCanvasElement.width, 'y': landmarks[8]['y'] * operationCanvasElement.height };
                     drawLine(indexCoordinate);
                     drawHandRegion(results.image, landmarks);
+                    runModel(session, handCanvasCtx).then(output => {
+                        console.log(labels[output.data.indexOf(Math.max(...output.data))]);
+                    });
                     // 各ランドマークを表示
                     // drawConnectors(operationCanvasCtx, landmarks, HAND_CONNECTIONS,
                     //     { color: '#00FF00', lineWidth: 5 });
