@@ -52,5 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
     function saveCanvas() {
         const handCanvasElement = document.getElementById('hand_canvas');
         const handCanvasCtx = handCanvasElement.getContext('2d');
+        const data = handCanvasElement.toDataURL();
+        console.log(data);
     }
 }, false);
