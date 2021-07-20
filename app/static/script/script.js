@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
         },
         // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
         signInFlow: 'popup',
-        signInSuccessUrl: '/home',
+        signInSuccessUrl: '/temp',
         signInOptions: [
             // Leave the lines as is for the providers you want to offer your users.    
             firebase.auth.EmailAuthProvider.PROVIDER_ID,
@@ -47,6 +47,14 @@ window.addEventListener('DOMContentLoaded', () => {
     // そのうちcanvasに変化があるごとに自動保存に変更する。
     if (location.pathname === '/draw') {
         setInterval(saveCanvas, 10000);
+    }
+
+    // ログイン後に直接「/home/<user_id>」に飛べないので代替処置
+    // 我ながら頭悪いと思う
+    if (location.pathname === '/temp') {
+        firebase.auth().onAuthStateChanged((user) => {
+            window.location.href = '/home/' + user.uid;
+        });
     }
 
     function saveCanvas() {

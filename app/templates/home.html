@@ -19,26 +19,28 @@
 
         <div class="flex-con">
             <div class="flex-1">
-                <button class="btn">
-                    ＋
-                </button>
-                <p>新規作成</p>
+                <form action="/draw" method="POST">
+                    <button class="btn" type="submit" name="name" value="0" onclick="location.href = '/draw';">
+                        ＋
+                    </button>
+                    <p>新規作成</p>
+                </form>
             </div>
-
-            <div class="flex-2">
-                <h1></h1>
-                <p>保存している画像</p>
-            </div>
-
-            <div class="flex-3">
-                <h1><span></span></h1>
-
+            {% for i in user %}
+            <div class=" flex-2">
+                <form action="/draw" method="POST">
+                    <button class="btn" type="submit" name="name" value="{{i.file_id}}"
+                        onclick="location.href = '/draw';">
+                        <img src="../pictures/{{i.file_id}}.jpg">
+                    </button>
+                    <p>{{i.created_at}}</p>
             </div>
 
         </div>
-
+        {% endfor %}
         <input type="submit" value="戻る" />
         <script src="../static/script/script.js" type="module"></script>
+
 </body>
 
 </html>
