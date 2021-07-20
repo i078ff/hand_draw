@@ -12,6 +12,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <!-- ONNX -->
+    <script src="https://cdn.jsdelivr.net/npm/onnxjs@0.1.7/dist/onnx.min.js" crossorigin="anonymous"></script>
+    <!-- ndarray -->
+    <script src="../static/script/ndarray-browser-min.js"></script>
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
@@ -97,9 +101,10 @@
             <canvas class="operation_canvas"></canvas>
         </div>
         <canvas id="draw_canvas"></canvas>
+        <canvas id="hand_canvas"></canvas>
     </main>
     <script src="../static/script/script.js" type="module"></script>
-    <script src="../static/script/mediapipe.js"></script>
+    <script src="../static/script/mediapipe.js" type="module"></script>
 </body>
 
 </html>

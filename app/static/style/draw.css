@@ -259,8 +259,19 @@ p{
     margin: 0 auto;
 }
 
+#hand_canvas {
+    position: absolute;
+    display: block;
+    border: solid 2px black;
+    background-color: black;
+    top: 750px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
 /*以下スマホ画面のCSS*/
- 
 @media screen and (max-width:900px){
     
     
