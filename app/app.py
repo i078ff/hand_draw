@@ -34,7 +34,7 @@ def draw():
         new = DB(user_id=user, created_at=datetime.now())
         db.session.add(new)
         db.session.commit()
-    return render_template("draw.html", picture=picture)
+    return render_template("draw.html", picture_id=picture)
 
 
 @app.route("/help")

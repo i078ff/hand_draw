@@ -1,3 +1,5 @@
+import { initModel, runModel } from './onnx.js';
+
 window.addEventListener(
     'DOMContentLoaded', () => {
         const videoElement = document.getElementsByClassName('input_video')[0];
@@ -5,10 +7,22 @@ window.addEventListener(
         const operationCanvasCtx = operationCanvasElement.getContext('2d');
         const drawCanvasElement = document.getElementById('draw_canvas');
         const drawCanvasCtx = drawCanvasElement.getContext('2d');
-        let isInDrawCanvas = false;
+        const handCanvasElement = document.getElementById('hand_canvas');
+        const handCanvasCtx = handCanvasElement.getContext('2d');
         drawCanvasElement.width = 900;
         drawCanvasElement.height = 600;
+        handCanvasElement.width = 224;
+        handCanvasElement.height = 224;
+        let isInDrawCanvas = false;
+        const modelFile = './static/squeezenet1_1_224_886.onnx';
+        const labels = ['all', 'index', 'index_middle', 'index_thumb', 'other'];
+        let session;
         init();
+
+        // モデルの初期化
+        initModel(modelFile).then(output => {
+            session = output;
+        })
 
         function init() {
             operationCanvasElement.width = window.innerWidth;
@@ -17,15 +31,21 @@ window.addEventListener(
             operationCanvasCtx.translate(-operationCanvasElement.width, 0);
             drawCanvasCtx.scale(-1, 1);
             drawCanvasCtx.translate(-drawCanvasElement.width, 0);
+            handCanvasCtx.scale(-1, 1);
+            handCanvasCtx.translate(-handCanvasElement.width, 0);
         }
 
         function onResults(results) {
             operationCanvasCtx.clearRect(0, 0, operationCanvasElement.width, operationCanvasElement.height);
+            handCanvasCtx.clearRect(0, 0, handCanvasElement.width, handCanvasElement.height);
             if (results.multiHandLandmarks) {
                 for (const landmarks of results.multiHandLandmarks) {
                     const indexCoordinate = { 'x': landmarks[8]['x'] * operationCanvasElement.width, 'y': landmarks[8]['y'] * operationCanvasElement.height };
                     drawLine(indexCoordinate);
                     drawHandRegion(results.image, landmarks);
+                    runModel(session, handCanvasCtx).then(output => {
+                        // console.log(labels[output.data.indexOf(Math.max(...output.data))]);
+                    });
                     // 各ランドマークを表示
                     // drawConnectors(operationCanvasCtx, landmarks, HAND_CONNECTIONS,
                     //     { color: '#00FF00', lineWidth: 5 });
@@ -57,6 +77,9 @@ window.addEventListener(
             operationCanvasCtx.drawImage(
                 image, image.width * dx, image.height * dy, image.width * dw, image.height * dh,
                 operationCanvasElement.width * dx, operationCanvasElement.height * dy, operationCanvasElement.width * dw, operationCanvasElement.height * dh);
+            handCanvasCtx.drawImage(
+                image, image.width * dx, image.height * dy, image.width * dw, image.height * dh,
+                0, 0, handCanvasElement.width, handCanvasElement.height);
         }
 
         function getHandRegion(landmarks) {
