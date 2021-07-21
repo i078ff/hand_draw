@@ -6,6 +6,7 @@ window.addEventListener(
         const colorList = document.getElementsByClassName('color');
         const menuThickness = document.getElementsByClassName('menu-thickness')[0];
         const thicknessList = document.getElementsByClassName('thickness');
+        const menuClear = document.getElementsByClassName('menu-clear')[0];
         const menuSetting = document.getElementsByClassName('menu-setting')[0];
         const videoElement = document.getElementsByClassName('input_video')[0];
         const operationCanvasElement = document.getElementsByClassName('operation_canvas')[0];
@@ -38,7 +39,7 @@ window.addEventListener(
             operationCanvasCtx.translate(-operationCanvasElement.width, 0);
             drawCanvasCtx.scale(-1, 1);
             drawCanvasCtx.translate(-drawCanvasElement.width, 0);
-            drawCanvasCtx.lineWidth = 5;
+            drawCanvasCtx.lineWidth = 7;
             handCanvasCtx.scale(-1, 1);
             handCanvasCtx.translate(-handCanvasElement.width, 0);
         }
@@ -65,6 +66,7 @@ window.addEventListener(
                 drawPointer(indexCoordinate),
                 chooseColor(indexCoordinate),
                 chooseThickness(indexCoordinate),
+                clickClear(indexCoordinate),
                 chooseSetting(indexCoordinate)
             ]);
             await drawLine(indexCoordinate)
@@ -155,9 +157,9 @@ window.addEventListener(
                         if (i === 0) {
                             drawCanvasCtx.lineWidth = 2;
                         } else if (i === 1) {
-                            drawCanvasCtx.lineWidth = 5;
+                            drawCanvasCtx.lineWidth = 7;
                         } else {
-                            drawCanvasCtx.lineWidth = 10;
+                            drawCanvasCtx.lineWidth = 15;
                         }
                     }
                 }
@@ -166,6 +168,17 @@ window.addEventListener(
                     thicknessFlag = false;
                     document.getElementsByClassName('button-thickness-hide')[0].style.display = 'none';
                 }
+            }
+        }
+
+        function clickClear(indexCoordinate) {
+            const menuClearRect = menuClear.getBoundingClientRect();
+            if ((labelQueue.length === labelQueue.filter(label => label === 'index').length) &&
+                (menuClearRect.left < operationCanvasElement.width - indexCoordinate.x) &&
+                (operationCanvasElement.width - indexCoordinate.x < menuClearRect.right) &&
+                (menuClearRect.top < indexCoordinate.y) &&
+                (indexCoordinate.y < menuClearRect.bottom)) {
+                drawCanvasCtx.clearRect(0, 0, drawCanvasElement.width, drawCanvasElement.height);
             }
         }
 
