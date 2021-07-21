@@ -1,3 +1,4 @@
+import { firebaseConfig } from './firebaseConfig.js';
 import { initModel, runModel } from './onnx.js';
 
 window.addEventListener(
@@ -8,6 +9,9 @@ window.addEventListener(
         const thicknessList = document.getElementsByClassName('thickness');
         const menuClear = document.getElementsByClassName('menu-clear')[0];
         const menuSetting = document.getElementsByClassName('menu-setting')[0];
+        const buttonLogout = document.getElementsByClassName('logout')[0];
+        const buttonHelp = document.getElementsByClassName('help')[0];
+        const buttonHome = document.getElementsByClassName('home')[0];
         const videoElement = document.getElementsByClassName('input_video')[0];
         const operationCanvasElement = document.getElementsByClassName('operation_canvas')[0];
         const operationCanvasCtx = operationCanvasElement.getContext('2d');
@@ -192,11 +196,52 @@ window.addEventListener(
                     settingFlag = true;
                     document.getElementsByClassName('button-setting-hide')[0].style.display = 'flex';
                 }
+                clickLogout(indexCoordinate);
+                clickHelp(indexCoordinate);
+                clickHome(indexCoordinate);
             } else {
                 if (settingFlag) {
                     settingFlag = false;
                     document.getElementsByClassName('button-setting-hide')[0].style.display = 'none';
                 }
+            }
+        }
+
+        function clickLogout(indexCoordinate) {
+            const buttonLogoutRect = buttonLogout.getBoundingClientRect();
+            if ((labelQueue.length === labelQueue.filter(label => label === 'index').length) &&
+                (buttonLogoutRect.left < operationCanvasElement.width - indexCoordinate.x) &&
+                (operationCanvasElement.width - indexCoordinate.x < buttonLogoutRect.right) &&
+                (buttonLogoutRect.top < indexCoordinate.y) &&
+                (indexCoordinate.y < buttonLogoutRect.bottom)) {
+                firebase.auth().signOut().then(() => {
+                    // Sign-out successful.
+                    window.location.href = '/login';
+                }).catch((error) => {
+                    // An error happened.
+                });
+            }
+        }
+
+        function clickHelp(indexCoordinate) {
+            const buttonHelpRect = buttonHelp.getBoundingClientRect();
+            if ((labelQueue.length === labelQueue.filter(label => label === 'index').length) &&
+                (buttonHelpRect.left < operationCanvasElement.width - indexCoordinate.x) &&
+                (operationCanvasElement.width - indexCoordinate.x < buttonHelpRect.right) &&
+                (buttonHelpRect.top < indexCoordinate.y) &&
+                (indexCoordinate.y < buttonHelpRect.bottom)) {
+                window.location.href = '/help';
+            }
+        }
+
+        function clickHome(indexCoordinate) {
+            const buttonHomeRect = buttonHome.getBoundingClientRect();
+            if ((labelQueue.length === labelQueue.filter(label => label === 'index').length) &&
+                (buttonHomeRect.left < operationCanvasElement.width - indexCoordinate.x) &&
+                (operationCanvasElement.width - indexCoordinate.x < buttonHomeRect.right) &&
+                (buttonHomeRect.top < indexCoordinate.y) &&
+                (indexCoordinate.y < buttonHomeRect.bottom)) {
+                window.location.href = '/temp';
             }
         }
 
