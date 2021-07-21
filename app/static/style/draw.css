@@ -83,21 +83,21 @@ button{
     z-index: 1
 }
 
-.white button{
+.white {
     background-color: white;
     border:none;
     box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);
 
 }
 
-.red button{
+.red {
     background-color: red;
     border:none;
     box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);
     
 }
 
-.blue button{
+.blue {
     background-color: blue;
     border:none;
     box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);
@@ -105,21 +105,21 @@ button{
     
 }
 
-.yellow button{
+.yellow {
     background-color: yellow;
     border:none;
     box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);
     
 }
 
-.green button{
+.green {
     background-color: greenyellow;
     border:none;
     box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);
     
 }
 
-.black button{
+.black {
     background-color: black;
     border:none;
     box-shadow: 1.5px 1.5px 1.5px rgba(0,0,0,0.3);

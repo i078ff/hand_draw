@@ -2,9 +2,10 @@ import { initModel, runModel } from './onnx.js';
 
 window.addEventListener(
     'DOMContentLoaded', () => {
-        const menuColor = document.getElementsByClassName('menu-color')[0]
-        const menuThickness = document.getElementsByClassName('menu-thickness')[0]
-        const menuSetting = document.getElementsByClassName('menu-setting')[0]
+        const menuColor = document.getElementsByClassName('menu-color')[0];
+        const colorList = document.getElementsByClassName('color');
+        const menuThickness = document.getElementsByClassName('menu-thickness')[0];
+        const menuSetting = document.getElementsByClassName('menu-setting')[0];
         const videoElement = document.getElementsByClassName('input_video')[0];
         const operationCanvasElement = document.getElementsByClassName('operation_canvas')[0];
         const operationCanvasCtx = operationCanvasElement.getContext('2d');
@@ -115,6 +116,15 @@ window.addEventListener(
                 if (!colorFlag) {
                     colorFlag = true;
                     document.getElementsByClassName('button-color-hide')[0].style.display = 'flex';
+                }
+                for (let i = 0; i < colorList.length; i++) {
+                    const colorRect = colorList[i].getBoundingClientRect();
+                    if ((colorRect.left < operationCanvasElement.width - indexCoordinate.x) &&
+                        (operationCanvasElement.width - indexCoordinate.x < colorRect.right) &&
+                        (colorRect.top < indexCoordinate.y) &&
+                        (indexCoordinate.y < colorRect.bottom)) {
+                        drawCanvasCtx.strokeStyle = window.getComputedStyle(colorList[i]).getPropertyValue('background-color');
+                    }
                 }
             } else {
                 if (colorFlag) {
