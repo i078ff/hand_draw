@@ -5,6 +5,7 @@ window.addEventListener(
         const menuColor = document.getElementsByClassName('menu-color')[0];
         const colorList = document.getElementsByClassName('color');
         const menuThickness = document.getElementsByClassName('menu-thickness')[0];
+        const thicknessList = document.getElementsByClassName('thickness');
         const menuSetting = document.getElementsByClassName('menu-setting')[0];
         const videoElement = document.getElementsByClassName('input_video')[0];
         const operationCanvasElement = document.getElementsByClassName('operation_canvas')[0];
@@ -37,6 +38,7 @@ window.addEventListener(
             operationCanvasCtx.translate(-operationCanvasElement.width, 0);
             drawCanvasCtx.scale(-1, 1);
             drawCanvasCtx.translate(-drawCanvasElement.width, 0);
+            drawCanvasCtx.lineWidth = 5;
             handCanvasCtx.scale(-1, 1);
             handCanvasCtx.translate(-handCanvasElement.width, 0);
         }
@@ -144,6 +146,21 @@ window.addEventListener(
                     thicknessFlag = true;
                     document.getElementsByClassName('button-thickness-hide')[0].style.display = 'flex';
                 }
+                for (let i = 0; i < thicknessList.length; i++) {
+                    const colorRect = thicknessList[i].getBoundingClientRect();
+                    if ((colorRect.left < operationCanvasElement.width - indexCoordinate.x) &&
+                        (operationCanvasElement.width - indexCoordinate.x < colorRect.right) &&
+                        (colorRect.top < indexCoordinate.y) &&
+                        (indexCoordinate.y < colorRect.bottom)) {
+                        if (i === 0) {
+                            drawCanvasCtx.lineWidth = 2;
+                        } else if (i === 1) {
+                            drawCanvasCtx.lineWidth = 5;
+                        } else {
+                            drawCanvasCtx.lineWidth = 10;
+                        }
+                    }
+                }
             } else {
                 if (thicknessFlag) {
                     thicknessFlag = false;
@@ -185,7 +202,6 @@ window.addEventListener(
                     lineFlag = true;
                     drawCanvasCtx.beginPath();
                 }
-                drawCanvasCtx.lineWidth = 5;
                 drawCanvasCtx.lineTo(indexCoordinate.x - drawRect.left - 12, indexCoordinate.y - drawRect.top);
                 drawCanvasCtx.stroke();
             } else {
