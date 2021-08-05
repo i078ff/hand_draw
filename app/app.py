@@ -45,3 +45,8 @@ def draw():
 @app.route("/help")
 def help():
     return render_template("help.html")
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return redirect("login")
