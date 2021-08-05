@@ -38,6 +38,8 @@ window.addEventListener('DOMContentLoaded', () => {
     firebase.auth().onAuthStateChanged((user) => {
         if (!user && location.pathname !== '/login') {
             window.location.href = '/login';
+        } else if (user && location.pathname === '/login') {
+            window.location.href = '/home/' + user.uid;
         }
     });
 
